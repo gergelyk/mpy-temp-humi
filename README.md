@@ -13,10 +13,10 @@ Damn simple application implemented in MicroPython, dedicated for ESP8266 platfo
 ## Features
 
 - Measures humidity & temperature
-- Provides current, max & min readings in the screen
+- Provides current, max & min readings on the display
 - Provides historical readings in form of a graph
 - Doesn't need internet connection
-- Three time range configurations: 5min, 1h, 24h
+- Three time range configurations: 5 min, 1 h, 24 h
 - Three display modes: light, dark, night
 - Three WiFi modes: disabled, access-point, station
 
