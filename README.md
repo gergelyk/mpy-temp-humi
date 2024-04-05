@@ -4,7 +4,7 @@ Damn simple application implemented in MicroPython, dedicated for ESP8266 platfo
 
 ![](docs/device.jpg)
 
-![](docs/ui1.png) ![](docs/ui2.png) ![](docs/ui3.png)
+![](docs/ui.png)
 
 ## Features
 
