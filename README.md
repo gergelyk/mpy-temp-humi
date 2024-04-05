@@ -2,9 +2,13 @@
 
 Damn simple application implemented in MicroPython, dedicated for ESP8266 platforms.
 
+<p align="center">
 ![](docs/device.jpg)
+</p>
 
+<p align="center">
 ![](docs/ui.png)
+</p>
 
 ## Features
 
@@ -16,7 +20,9 @@ Damn simple application implemented in MicroPython, dedicated for ESP8266 platfo
 - Three display modes: light, dark, night
 - Three WiFi modes: disabled, access-point, station
 
+<p align="center">
 ![](docs/wifi_modes.png)
+</p>
 
 ## Usage
 
