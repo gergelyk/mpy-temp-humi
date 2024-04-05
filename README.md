@@ -3,11 +3,11 @@
 Damn simple application implemented in MicroPython, dedicated for ESP8266 platforms.
 
 <p align="center">
-![](docs/device.jpg)
+<img src="docs/device.jpg">
 </p>
 
 <p align="center">
-![](docs/ui.png)
+<img src="docs/ui.jpg">
 </p>
 
 ## Features
@@ -21,7 +21,7 @@ Damn simple application implemented in MicroPython, dedicated for ESP8266 platfo
 - Three WiFi modes: disabled, access-point, station
 
 <p align="center">
-![](docs/wifi_modes.png)
+<img src="docs/wifi_modes.png">
 </p>
 
 ## Usage
