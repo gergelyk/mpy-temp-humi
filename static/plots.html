@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="uPlot.min.css">
+        <script src="uPlot.iife.min.js"></script>
+    </head>
+    <style>
+        body.light {
+        background-color: white;
+        }
+
+        body.dark  {
+        background-color: white;
+        }
+    </style>
+    <body>
+        <center><h2><p class="uplot u-title" id="title" style="width: auto">Loading...</p></h2></center>
+        <div class="container" style="display: flex;">
+            <div>
+                <button onclick="location.href='/wifi'" type="button">WiFi Setup</button>
+            </div>
+            <div style="flex-grow: 1; text-align: right;">
+                <button id="tr5m" onclick="location.href=location.pathname + '?tr=5m';">5 min</button>
+                <button id="tr1h" onclick="location.href=location.pathname + '?tr=1h';">1 h</button>
+                <button id="tr1d" onclick="location.href=location.pathname + '?tr=1d';">24 h</button>
+                <button onclick="reloadAll();">&#8635</button>
+            </div>
+        </div>
+        
+        <script>
+ 
+            async function fetch_(url) {
+                if (location.host == "") {
+                    // this is when opening plot.html from a local file (for development purposes)
+                    // in this case CORS policy must be disabled
+                    return fetch("http://192.168.4.1" + url);
+                } else {
+                    return fetch(url);
+                }
+            }
+    
+            function parseInt16(x) {
+                var i = parseInt(x, 16);
+                if (i == 127) {
+                    return null;
+                } else {
+                    return i;
+                }
+            }
+
+            function getSize() {
+                return {
+                    width: window.innerWidth - 10,
+                    height: window.innerHeight/2 - 80,
+                }
+            }
+            
+            function doPlot(data, opts) {
+                let plot = new uPlot(opts, data, document.body);
+                window.addEventListener("resize", e => {
+                    plot.setSize(getSize());
+                });
+            }
+
+            async function fetchData(url) {
+                const response = await fetch_(url);
+                return await response.text();
+            }
+
+            function fetchAndPlot(url, opts, sample_index, sample_count, scaleDivider) {
+                fetchData(url).then((text) => {
+                    let ys = text.trim().split('\n').map(parseInt16);
+
+                    let ys_lower = ys.slice(Math.max(0, sample_index - sample_count), sample_index);
+                    let ys_upper = [];
+                    if (ys_lower.length < sample_count) {
+                        ys_upper = ys.slice(ys_lower.length - sample_count);
+                    }
+                    ys_valid = ys_upper.concat(ys_lower);
+                    ys_valid.reverse();
+
+                    var xs = Array.from({length: sample_count}, (x, i) => i / scaleDivider);
+                    doPlot([xs, ys_valid], opts);
+                });
+            }
+            
+            async function fetchTitle() {
+                console.log("Fetching Info");
+                const response = await fetch_("/info");
+                return await response.text();
+            }
+            
+            function reloadAll() {
+            
+                const currentUrl = new URL(window.location.href);
+                const timeRange = currentUrl.searchParams.get("tr") || "5m";
+                document.getElementById("tr" + timeRange).setAttribute("disabled", "");
+    
+                console.log("Current URL: " + currentUrl);
+                console.log("Time Range: " + timeRange);
+                
+                unit = {"5m": "min", "1h": "min", "1d": "h"}[timeRange]
+                
+                const optsTemp = {
+                    ...getSize(),
+                    scales: {
+                        x: {
+                            time: false,
+                        },
+                        y: {
+                            auto: false,
+                            range: [10, 40],
+                        },
+                    },
+                    series: [
+                        {
+                            label: "Time [" + unit + "]",
+                        },
+                        {
+                            label: "Temperature [°C]",
+                            stroke: "red",
+                        }
+                    ]
+                };
+
+                const optsHumi = {
+                    ...getSize(),
+                    scales: {
+                        x: {
+                            time: false,
+                        },
+                        y: {
+                            auto: false,
+                            range: [0, 100],
+                        },
+                    },
+                    series: [
+                        {
+                            label: "Time [" + unit + "]",
+                        },
+                        {
+                            label: "Humidity [%RH]",
+                            stroke: "blue",
+                        }
+                    ]
+                };
+
+                fetchTitle().then((text) => {
+                    info = JSON.parse(text);
+                    document.title = info.device_id;
+                    document.getElementById('title').innerHTML = info.device_id + " : DHT11";
+
+                    console.log("Removing old plots");
+                    document.querySelectorAll('.uplot.u-hz').forEach(e => e.remove())
+                    scaleDivider = {"5m": 30, "1h": 2.5, "1d": 6.25}[timeRange]
+                    console.log("Fetching & plotting temperature");
+                    fetchAndPlot("/data?dim=temp&tr=" + timeRange, optsTemp, info.sample_index[timeRange], info.sample_count + 1, scaleDivider);
+                    console.log("Fetching & plotting humidity");
+                    fetchAndPlot("/data?dim=humi&tr=" + timeRange, optsHumi, info.sample_index[timeRange], info.sample_count + 1, scaleDivider);
+                    console.log("Done!");
+                });
+            }
+            
+            reloadAll();
+
+        </script>
+        
+    </body>
+</html>

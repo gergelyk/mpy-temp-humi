@@ -1,0 +1,47 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="/chota-0.9.2.css">
+</head>
+<body style="padding: 10px;">
+
+<form method="post" class="is-center">
+    <div class="card">
+        <header><h4>WiFi Settings</h4></header>
+        <p>
+        <label for="ssid">Network:</label>
+        <input type="text" id="ssid" name="ssid" autocomplete="off"/>
+        <label for="pswd">Password:</label>
+        <input type="text" id="pswd" name="pswd" autocomplete="off"/>
+        </p>
+        <footer class="is-right">
+        <input type="submit" formaction="/disable_wifi" value="Disable" class="button error"/>
+        &nbsp;
+        <input type="submit" value="Save"/>
+        </footer>
+    </div>
+</form>
+
+<script>
+    async function fetch_(url) {
+        if (location.host == "") {
+            // this is when opening plot.html from a local file (for development purposes)
+            // in this case CORS policy must be disabled
+            return fetch("http://192.168.4.1" + url);
+        } else {
+            return fetch(url);
+        }
+    }
+
+    async function fetchInfo() {
+        const response = await fetch_("/info");
+        return await response.text();
+    }
+    fetchInfo().then((text) => {
+        info = JSON.parse(text);
+        document.title = info.device_id;
+        document.getElementById('ssid').value = info.ssid;
+    });
+</script>
+</body>
+</html>
