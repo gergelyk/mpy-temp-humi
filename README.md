@@ -2,7 +2,9 @@
 
 Damn simple application implemented in MicroPython, dedicated for ESP8266 platforms.
 
-![](display.jpg)
+![](docs/device.jpg)
+
+![](docs/ui1.png) ![](docs/ui2.png) ![](docs/ui3.png)
 
 ## Features
 
@@ -11,8 +13,10 @@ Damn simple application implemented in MicroPython, dedicated for ESP8266 platfo
 - Provides historical readings in form of a graph
 - Doesn't need internet connection
 - Three time range configurations: 5min, 1h, 24h
-- Three WiFi modes: disabled, access-point, station
 - Three display modes: light, dark, night
+- Three WiFi modes: disabled, access-point, station
+
+![](docs/wifi_modes.png)
 
 ## Usage
 
@@ -26,12 +30,12 @@ Hold DISP button any time to reset WiFi settings.
 
 ## Design Decisions
 
-- Frontend has been built using minimalistic libraries (chota, uplot) in order to fit it into persistent memory and be served efficiently.
+- Frontend has been built using minimalistic libraries ([chota](https://jenil.github.io/chota/), [uplot](https://github.com/leeoniya/uPlot)) in order to fit it into persistent memory and be served efficiently.
 - In order to save resources in ESP8266, frontend has been built as a set of static HTML files and is rendered entirely on the client side.
 - Final source code is compiled to .mpy files to boost startup time and to save memory.
 - Data type optimizations (`array`, `const`) and Python generators have been employed to save memory in ESP8266.
 - Viper code and Native code emiters didn't bring much benefits and havn't been used in this application.
-- Dedicated web framework (mlask) has been developed to meet aforementioned criteria.
+- Dedicated web framework (*mlask*) has been developed to meet aforementioned criteria.
 
 ## Hardware Configuration
 
