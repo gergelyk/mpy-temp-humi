@@ -7,7 +7,7 @@ Damn simple application implemented in MicroPython, dedicated for ESP8266 platfo
 </p>
 
 <p align="center">
-<img src="docs/ui.jpg">
+<img src="docs/ui.png">
 </p>
 
 ## Features
