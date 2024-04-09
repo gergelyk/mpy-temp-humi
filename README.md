@@ -48,7 +48,7 @@ Hold DISP button any time to reset WiFi settings.
 ```
          ----------------                   ------------
         |            GND |-----------------| GND        |
-        | D-duino    VCC |--------------+--| VCC        |
+        | D-duino    3V3 |--------------+--| VCC        |
   USB --|    v3          |              |  |      DHT11 |
 (Power) | (HW-630)       |  +-|4k7 ohm|-+  |            |
         |                |  |              |            |
