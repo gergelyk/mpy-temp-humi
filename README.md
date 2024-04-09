@@ -46,11 +46,14 @@ Hold DISP button any time to reset WiFi settings.
 ## Hardware Configuration
 
 ```
-         ----------------               ------------
-        | D-duino     3V |-------------| VCC        |
-  USB --|    v3      GND |-------------| GND  DHT11 |
-(Power) | (HW-630)    D0 |--|4k7 ohm|--| Data       |
-         ----------------               ------------
+         ----------------                   ------------
+        |            GND |-----------------| GND        |
+        | D-duino    VCC |--------------+--| VCC        |
+  USB --|    v3          |              |  |      DHT11 |
+(Power) | (HW-630)       |  +-|4k7 ohm|-+  |            |
+        |                |  |              |            |
+        |             D0 |--+--------------| Data       |
+         ----------------                   ------------
 ```
 
 ## Software Deployment
