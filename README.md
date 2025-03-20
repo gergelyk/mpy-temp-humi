@@ -2,6 +2,8 @@
 
 Damn simple application implemented in MicroPython, dedicated for ESP8266 platforms.
 
+`master` branch supports DHT11 sensor. `dht22` branch supports DHT22.
+
 <p align="center">
 <img src="docs/device.jpg">
 </p>
