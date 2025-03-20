@@ -42,7 +42,7 @@ class LightMode(Page):
         self._disp.hw.text(f' min:{meas_info.hmin} max:{meas_info.hmax}', 0, 33, 1)
         self._disp.hw.text(f'WiFi: {wifi_info.status}', 0, 46, 1)
         self._disp.hw.text(wifi_info.message, 0, 56, 1)
-        self._disp.hw.rect(83, 0, 3, 3, 1) # degree symbol
+        self._disp.hw.rect(97, 0, 3, 3, 1) # degree symbol
         self._disp.hw.hline(0, 20, 128, 1)
         self._disp.hw.hline(0, 43, 128, 1)
         self._disp.hw.show()

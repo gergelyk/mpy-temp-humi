@@ -71,8 +71,8 @@ humi_minmax = MinMax()
 
 def set_sample(spl_5m_temp, spl_5m_humi):
     
-    spl_5m_temp = NaN if spl_5m_temp is None else spl_5m_temp
-    spl_5m_humi = NaN if spl_5m_humi is None else spl_5m_humi
+    spl_5m_temp = NaN if spl_5m_temp is None else int(round(spl_5m_temp))
+    spl_5m_humi = NaN if spl_5m_humi is None else int(round(spl_5m_humi))
 
     temp_minmax.set_sample(spl_5m_temp)
     humi_minmax.set_sample(spl_5m_humi)

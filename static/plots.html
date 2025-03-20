@@ -150,7 +150,7 @@
                 fetchTitle().then((text) => {
                     info = JSON.parse(text);
                     document.title = info.device_id;
-                    document.getElementById('title').innerHTML = info.device_id + " : DHT11";
+                    document.getElementById('title').innerHTML = info.device_id + " : DHT22";
 
                     console.log("Removing old plots");
                     document.querySelectorAll('.uplot.u-hz').forEach(e => e.remove())
